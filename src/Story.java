@@ -19,6 +19,7 @@ public class Story {
         Background home = new Background("Дом");
         Background outside = new Background("улица");
         Background forest = new Background("Лес");
+        Background.Weather story=new Background.Weather("Солнечно");
         Personage Fluff = new Personage("Пух", home, Mood.NORMAL);
         Personage.Mind fluff_mind = Fluff.new Mind(fluff_song);
         Personage Owl = new Personage("Сова", home, Mood.NORMAL);
