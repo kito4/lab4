@@ -22,27 +22,30 @@ public class Personage implements HasMood, Mobile, Reaction {
     public class Mind {
         List<Song> know_song = new ArrayList<>();
         List<Task> tasks = new ArrayList<>();
+
         public Mind(List<Song> know_song) {
             if ((know_song == null)) {
                 throw new IllegalArgumentException("arguments of f() are null");
             }
             this.know_song = know_song;
         }
-        public void setTasks(List<Task> tasks){
-            this.tasks=tasks;
+
+        public void setTasks(List<Task> tasks) {
+            this.tasks = tasks;
         }
 
         public List<Task> getTasks() {
             return tasks;
         }
-        public void doTask(List task){
+
+        public void doTask(List task) {
             List<Task> empty = new ArrayList<>();
             this.setTasks(empty);
             System.out.println("Объявление создано");
         }
 
         public void sing(Integer i) {
-            if ((i== null)) {
+            if ((i == null)) {
                 throw new IllegalArgumentException("arguments of f() are null");
             }
             System.out.println("поет песню " + know_song.get(i).getText());
@@ -50,7 +53,7 @@ public class Personage implements HasMood, Mobile, Reaction {
     }
 
     public Personage(String name, Location location, Mood moodState) {
-        if ((name == null) || (location == null)|| (moodState==null)) {
+        if ((name == null) || (location == null) || (moodState == null)) {
             throw new IllegalArgumentException("arguments of f() are null");
         }
         this.name = name;
@@ -69,11 +72,11 @@ public class Personage implements HasMood, Mobile, Reaction {
         return name;
     }
 
-    public void changeLocation(Background str1) throws BadWeatherException{
+    public void changeLocation(Background str1) throws BadWeatherException {
         if ((str1 == null)) {
             throw new IllegalArgumentException("arguments of f() are null");
         }
-        if (Background.Weather.status.equals("Дождь")){
+        if (Background.Weather.status.equals("Дождь")) {
             throw new BadWeatherException("Плохая погода");
         }
         location.name = str1.name;
@@ -112,7 +115,7 @@ public class Personage implements HasMood, Mobile, Reaction {
             throw new IllegalArgumentException("arguments of f() are null");
         }
         System.out.println(name + " смотрит на " + thing.name);
-        if (thing.name.equals("шнурок")){
+        if (thing.name.equals("шнурок")) {
             throw new DejavuException("У Пуха дежавю");
         }
     }
@@ -151,8 +154,8 @@ public class Personage implements HasMood, Mobile, Reaction {
 
     }
 
-    public void eat(Boolean carefully)  {
-        if ((carefully==null)) {
+    public void eat(Boolean carefully) {
+        if ((carefully == null)) {
             throw new IllegalArgumentException("arguments of f() are null");
         }
         System.out.println("Пух ест мед");

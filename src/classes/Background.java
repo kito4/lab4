@@ -6,7 +6,8 @@ public class Background extends Location {
     public Background(String name) {
         super(name);
     }
-    public static class Weather{
+
+    public static class Weather {
         public static String status;
 
         public Weather(String status) {
@@ -21,6 +22,7 @@ public class Background extends Location {
             status = status;
         }
     }
+
     @Override
     public String toString() {
         return "Background{" +
