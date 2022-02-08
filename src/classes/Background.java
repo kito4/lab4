@@ -7,10 +7,10 @@ public class Background extends Location {
         super(name);
     }
     public static class Weather{
-        String status;
+        public static String status;
 
         public Weather(String status) {
-            this.status = status;
+            status = status;
         }
 
         public String getStatus() {
@@ -18,7 +18,7 @@ public class Background extends Location {
         }
 
         public void setStatus(String status) {
-            this.status = status;
+            status = status;
         }
     }
     @Override

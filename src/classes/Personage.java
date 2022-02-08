@@ -8,10 +8,11 @@ import interfaces.HasMood;
 import interfaces.Mobile;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Personage implements HasMood, Mobile, Reaction {
-    ArrayList<Thing> favorite_things = new ArrayList<>();
+    List<Thing> favorite_things = new ArrayList<>();
     private final String name;
     private Location location;
     private Mood moodState;
@@ -19,24 +20,48 @@ public class Personage implements HasMood, Mobile, Reaction {
     private Thing tale;
 
     public class Mind {
-        ArrayList<Song> know_song = new ArrayList<>();
-
-        public Mind(ArrayList<Song> know_song) {
+        List<Song> know_song = new ArrayList<>();
+        List<Task> tasks = new ArrayList<>();
+        public Mind(List<Song> know_song) {
+            if ((know_song == null)) {
+                throw new IllegalArgumentException("arguments of f() are null");
+            }
             this.know_song = know_song;
         }
+        public void setTasks(List<Task> tasks){
+            this.tasks=tasks;
+        }
 
-        public void sing(int i) {
+        public List<Task> getTasks() {
+            return tasks;
+        }
+        public void doTask(List task){
+            List<Task> empty = new ArrayList<>();
+            this.setTasks(empty);
+            System.out.println("Объявление создано");
+        }
+
+        public void sing(Integer i) {
+            if ((i== null)) {
+                throw new IllegalArgumentException("arguments of f() are null");
+            }
             System.out.println("поет песню " + know_song.get(i).getText());
         }
     }
 
     public Personage(String name, Location location, Mood moodState) {
+        if ((name == null) || (location == null)|| (moodState==null)) {
+            throw new IllegalArgumentException("arguments of f() are null");
+        }
         this.name = name;
         this.location = location;
         this.moodState = moodState;
     }
 
-    public void setFavorite_things(ArrayList<Thing> favorite_things) {
+    public void setFavorite_things(List<Thing> favorite_things) {
+        if ((favorite_things == null)) {
+            throw new IllegalArgumentException("arguments of f() are null");
+        }
         this.favorite_things = favorite_things;
     }
 
@@ -44,7 +69,13 @@ public class Personage implements HasMood, Mobile, Reaction {
         return name;
     }
 
-    public void changeLocation(Background str1) {
+    public void changeLocation(Background str1) throws BadWeatherException{
+        if ((str1 == null)) {
+            throw new IllegalArgumentException("arguments of f() are null");
+        }
+        if (Background.Weather.status.equals("Дождь")){
+            throw new BadWeatherException("Плохая погода");
+        }
         location.name = str1.name;
         System.out.println(name + " переместился на " + location.name);
     }
@@ -61,25 +92,43 @@ public class Personage implements HasMood, Mobile, Reaction {
 
     @Override
     public void setMood(Mood newMood) {
+        if ((newMood == null)) {
+            throw new IllegalArgumentException("arguments of f() are null");
+        }
         moodState = newMood;
         System.out.println("У " + name + " теперь " + getMood() + " настроение");
     }
 
     public void setTale(Thing tale) {
+        if ((tale == null)) {
+            throw new IllegalArgumentException("arguments of f() are null");
+        }
         this.tale = tale;
         System.out.println("Хвост прикреплен");
     }
 
-    public void look(Thing thing) {
+    public void look(Thing thing) throws DejavuException {
+        if ((thing == null)) {
+            throw new IllegalArgumentException("arguments of f() are null");
+        }
         System.out.println(name + " смотрит на " + thing.name);
+        if (thing.name.equals("шнурок")){
+            throw new DejavuException("У Пуха дежавю");
+        }
     }
 
     public void take(Thing thing) {
+        if ((thing == null)) {
+            throw new IllegalArgumentException("arguments of f() are null");
+        }
         inventary.add(thing);
         System.out.println(name + " взял " + thing.name);
     }
 
     public void give(Thing thing, Personage receiver) {
+        if ((thing == null) || (receiver == null)) {
+            throw new IllegalArgumentException("arguments of f() are null");
+        }
         inventary.remove(thing);
         receiver.inventary.add(thing);
         System.out.println(name + " отдал " + thing.name + " " + receiver.getName());
@@ -89,24 +138,24 @@ public class Personage implements HasMood, Mobile, Reaction {
 
     @Override
     public void react_to_thing(Thing thing, Personage persona) {
+        if ((thing == null) || (persona == null)) {
+            throw new IllegalArgumentException("arguments of f() are null");
+        }
         if (persona.favorite_things.contains(thing)) {
-            if (thing.name == "шнурок") {
+            if (thing.name.equals("шнурок")) {
                 persona.inventary.remove(thing);
                 persona.setTale(thing);
                 persona.setMood(Mood.HAPPY);
-                throw new TickledException("Иа-Иа принялся носиться по Лесу");
             }
         }
 
     }
 
-    public void eat(boolean carefully) throws DirtyException {
-        if (carefully) {
-            this.setMood(Mood.FULL);
-        } else {
-            this.setMood(Mood.FULL);
-            throw new DirtyException("грязные губы");
+    public void eat(Boolean carefully)  {
+        if ((carefully==null)) {
+            throw new IllegalArgumentException("arguments of f() are null");
         }
+        System.out.println("Пух ест мед");
     }
 
     @Override

@@ -8,9 +8,13 @@ public enum Mood {
     HUNGRY("голоден"),
     FULL("ПОЕЛ") {};
 
+
     private final String representation;
 
     Mood(String representation) {
+        if ((representation == null)) {
+            throw new IllegalArgumentException("arguments of f() are null");
+        }
         this.representation = representation;
     }
 

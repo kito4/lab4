@@ -13,11 +13,17 @@ public class Tale implements ThingInterface {
     }
 
     public Tale(String name) {
+        if ((name == null)) {
+            throw new IllegalArgumentException("arguments of f() are null");
+        }
         this.name = name;
     }
 
     @Override
     public void setName(String name) {
+        if ((name == null)) {
+            throw new IllegalArgumentException("arguments of f() are null");
+        }
         this.name = name;
     }
 

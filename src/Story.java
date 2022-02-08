@@ -4,6 +4,7 @@ import interfaces.Dialog;
 import Exception.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Story {
@@ -11,9 +12,15 @@ public class Story {
     public static void main(String[] args) {
         Thing bell = new Thing("колокольчик");
         Thing lace = new Thing("шнурок");
-        ArrayList<Thing> fav = new ArrayList<>();
-        ArrayList<Song> fluff_song = new ArrayList<>();
+        List<Thing> fav = new ArrayList<>();
+        List<Song> fluff_song = new ArrayList<>();
+        List<Song> robin_song =new ArrayList<>();
+        List<Song> owl_song =new ArrayList<>();
+        List<Task> robin_task = new ArrayList<>();
         fav.add(lace);
+        Background.Weather.status="Солнечно";
+        Task obv = new Task("объявление");
+        robin_task.add(obv);
         fluff_song.add(new Song("Кто нашел хвост?"));
         Thing announcement = new Thing("объявление");
         Background home = new Background("Дом");
@@ -21,14 +28,24 @@ public class Story {
         Background forest = new Background("Лес");
         Background.Weather story=new Background.Weather("Солнечно");
         Personage Fluff = new Personage("Пух", home, Mood.NORMAL);
+        Personage Robin = new Personage("Кристофер Робин",forest,Mood.NORMAL);
         Personage.Mind fluff_mind = Fluff.new Mind(fluff_song);
         Personage Owl = new Personage("Сова", home, Mood.NORMAL);
         Personage Ia = new Personage("Иа", forest, Mood.SAD);
         Ia.setFavorite_things(fav);
+        Personage.Mind robin_mind=Robin.new Mind(robin_song);
+        Personage.Mind Owl_mind = Owl.new Mind(owl_song);
+        robin_mind.setTasks(robin_task);
         Dialog fluff = new Dialog() { //анонимный класс
             @Override
-            public void AskaboutSomething(boolean x, boolean lasttime) {
-
+            public void remind_about_robin() {
+                System.out.println("Сова объясняет Пуху об "+robin_mind.getTasks().get(0).getName());
+            }
+            @Override
+            public void AskaboutSomething(Boolean x, Boolean lasttime) {
+                if ((x == null) || (lasttime == null)) {
+                    throw new IllegalArgumentException("arguments of f() are null");
+                }
                 if (lasttime) {
                     System.out.println("Нет, нет, никогда!");
                 } else {
@@ -43,24 +60,39 @@ public class Story {
         fluff.AskaboutSomething(true, false);
         fluff.AskaboutSomething(false, false);
         fluff.AskaboutSomething(true, true);
-        Fluff.changeLocation(outside);
-        Owl.changeLocation(outside);
+        fluff.remind_about_robin();
+        robin_mind.doTask(robin_mind.getTasks());
+        try {
+            Fluff.changeLocation(outside);
+            Owl.changeLocation(outside);
+        }catch (BadWeatherException e){
+            System.out.println("Нужно одется по погоде");
+        }
+
         Fluff.look(bell);
         Fluff.look(announcement);
-        Fluff.look(lace);
+        try {
+            Fluff.look(lace);
+        }catch (DejavuException e){
+            System.out.println("Пух что-то понял");
+        }
         Fluff.take(lace);
-        Fluff.changeLocation(forest);
         try {
-            Fluff.give(lace, Ia);
-        } catch (TickledException e) {
-            Fluff.setMood(Mood.HUNGRY);
+            Fluff.changeLocation(forest);
+        }catch (BadWeatherException e){
+            System.out.println("Нужно одется по погоде");
         }
-        Fluff.changeLocation(home);
+        Fluff.give(lace, Ia);
+        Fluff.setMood(Mood.HUNGRY);
+
         try {
-            Fluff.eat(false);
-        } catch (DirtyException e) {
-            System.out.println("вытирает губы");
+            Fluff.changeLocation(home);
+        }catch (BadWeatherException e){
+            System.out.println("Нужно одется по погоде");
         }
+        Fluff.eat(false);
+        System.out.println("вытирает губы");
+
         fluff_mind.sing(0);
     }
 }
