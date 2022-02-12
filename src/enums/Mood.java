@@ -6,7 +6,8 @@ public enum Mood {
     NORMAL("нормальное"),
     ANRGY("злое"),
     HUNGRY("голоден"),
-    FULL("ПОЕЛ") {};
+    FULL("ПОЕЛ") {},
+    BORED("Скучает");
 
 
     private final String representation;

@@ -36,6 +36,14 @@ public class Story {
         Personage.Mind robin_mind = Robin.new Mind(robin_song);
         Personage.Mind Owl_mind = Owl.new Mind(owl_song);
         robin_mind.setTasks(robin_task);
+        List<Word> owl_words = new ArrayList<>();
+        owl_words.add(new Word("wfwq"));
+        owl_words.add(new Word("kjnvr"));
+        owl_words.add(new Word("kjfnvwrn"));
+        owl_words.add(new Word("anveoewinv"));
+        owl_words.add(new Word("jsnvnsvnsdnvsdnv"));
+        Owl.monolog(Fluff, owl_words);
+        fluff_mind.say_about_Inventary();
         Dialog fluff = new Dialog() { //анонимный класс
             @Override
             public void remind_about_robin() {

@@ -1,5 +1,7 @@
 package classes;
 
+import java.util.Random;
+
 import Exception.*;
 import abstractions.Location;
 import interfaces.Reaction;
@@ -16,7 +18,7 @@ public class Personage implements HasMood, Mobile, Reaction {
     private final String name;
     private Location location;
     private Mood moodState;
-    private ArrayList<Thing> inventary = new ArrayList<>();
+    private List<Thing> inventary = new ArrayList<>();
     private Thing tale;
 
     public class Mind {
@@ -28,6 +30,10 @@ public class Personage implements HasMood, Mobile, Reaction {
                 throw new IllegalArgumentException("arguments of f() are null");
             }
             this.know_song = know_song;
+        }
+
+        public void say_about_Inventary() {
+            System.out.println("У " + name + " " + inventary.size() + " вещей");
         }
 
         public void setTasks(List<Task> tasks) {
@@ -50,6 +56,13 @@ public class Personage implements HasMood, Mobile, Reaction {
             }
             System.out.println("поет песню " + know_song.get(i).getText());
         }
+    }
+
+    public void monolog(Personage persona, List<Word> all_word) {
+        for (Word text : all_word) {
+            System.out.println("Сова сказала слово длиной " + text.getLenght());
+        }
+        persona.setMood(Mood.BORED);
     }
 
     public Personage(String name, Location location, Mood moodState) {
@@ -158,6 +171,7 @@ public class Personage implements HasMood, Mobile, Reaction {
         if ((carefully == null)) {
             throw new IllegalArgumentException("arguments of f() are null");
         }
+
         System.out.println("Пух ест мед");
     }
 
